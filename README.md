@@ -1,0 +1,5 @@
+# auto-clicker
+
+
+
+## Getting started
