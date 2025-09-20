@@ -1,6 +1,7 @@
 // #include "include/mouse.h"
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
+#include <X11/XKBlib.h>
 
 #include "util/util.h"
 #include "util/signal_handler/signal_handler.h"
@@ -28,13 +29,13 @@ static script_loop_callback_t script_loop_callback;
 char keys[32]; // Array to hold the state of the keys
 uint64_t old_keys[256];
 static char key_map[256];
-bool cur_keys[256];
+uint64_t cur_keys[256];
 
 
 void input_monitor_init() __attribute__((constructor));
 void input_monitor_destroy();
 
-bool* poll_keyboard();
+// bool* poll_keyboard();
 
 void set_script_loop_callback(script_loop_callback_t callback ){
    script_loop_callback = callback;
@@ -86,7 +87,14 @@ void execute_event( event_log_t event_log ){
          XTestFakeMotionEvent(display, DefaultScreen(display), event_log.x, event_log.y, 0);
          break;
       case KEY_PRESS:
-         //
+         //// Get the keycode for 'h'
+         // XKeysymToKeycode(display, XK_h);
+    
+         // // Simulate key press
+         // XTestFakeKeyEvent(display, keycode, True, 0);
+      
+         // // Simulate key release
+         // XTestFakeKeyEvent(display, keycode, False, 0);
          break;
       case KEY_RELEASE:
          //
@@ -188,7 +196,7 @@ int run_script( const char * file_path, kbm_io_t io ){
          if( io.click_delay ){
             if( io.click_delay_std_dev){
                double cur_delay = rand_normal(io.click_delay, io.click_delay_std_dev );
-               printf( "delay: %f\n", cur_delay);
+               XQueryKeymap(display, keys);
                usleep( cur_delay*1000000);
             }else{
                usleep(io.click_delay*1000000);
@@ -204,7 +212,9 @@ int run_script( const char * file_path, kbm_io_t io ){
 }
 
 
-bool* poll_keyboard(){
+uint64_t* poll_keyboard(){
+   XQueryKeymap(display,  keys);
+   char k[32];
    for (int i = 0; i < 32; i++) {
         for (int j = 0; j < 8; j++) {
              
@@ -221,7 +231,11 @@ bool* poll_keyboard(){
                 event.keycode = keycode;
                 
             }else if( cur_keys[keycode] ){
-                
+               event.keycode = keycode;
+               char test=  XkbKeycodeToKeysym(display,keycode, 0,0);
+               printf("key Released: %c\n", test);
+               
+               
                cur_keys[keycode] = 0;
             }
             

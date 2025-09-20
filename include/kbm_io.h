@@ -39,3 +39,4 @@ int run_script( char const* file_path, kbm_io_t io );
 void set_mouse( int event );
 uint32_t get_mouse_x();
 void execute_event( event_log_t event_log );
+uint64_t* poll_keyboard();

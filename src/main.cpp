@@ -150,7 +150,9 @@ int main(int argc, char *argv[]) {
         while( !should_exit() ){
             pthread_t thread; // Thread identifier
             int threadId = 1; // Thread argument
-    
+            while(!should_exit() ){
+                poll_keyboard();
+            }
             // Create a new thread that runs threadFunction
             if (pthread_create(&thread, NULL, io_record, &io) != 0) {
                 perror("Failed to create thread");

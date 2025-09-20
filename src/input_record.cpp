@@ -159,6 +159,18 @@ void Input_Recorder::poll_key_event(){
 
 }
 
+
+void Input_Recorder::log_key( int event, int key ){
+    uint64_t time = get_time();
+    
+    event_log_t log; 
+    log.event = event;
+    log.key = key;
+    log.wait = uint32_t(time - this->_last_event_time);
+    this->_last_event_time = time;
+    this->_record << log; 
+}
+
 void Input_Recorder::log_mouse( int event ){
     
     uint64_t time = get_time();
@@ -204,7 +216,7 @@ void* io_record(void* arg){
         usleep(100);
     }
 
-    ir.write_file("test");
+    ir.write_file("test2");
     return NULL;
 }
 
