@@ -1,9 +1,11 @@
-import sys
 
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QStackedWidget, QVBoxLayout, QHBoxLayout, QLabel, QMenuBar, QLineEdit, QFormLayout, QCheckBox
+from  menu.menu_common2 import *
+# import sys
 
-from PyQt6.QtGui import QColor, QPalette, QAction, QIntValidator, QDoubleValidator, QFont
+# from PyQt6.QtCore import QSize, Qt
+# from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QStackedWidget, QVBoxLayout, QHBoxLayout, QLabel, QMenuBar, QLineEdit, QFormLayout, QCheckBox
+
+# from PyQt6.QtGui import QColor, QPalette, QAction, QIntValidator, QDoubleValidator, QFont
 
 
 

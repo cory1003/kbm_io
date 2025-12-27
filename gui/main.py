@@ -1,14 +1,8 @@
 import sys
-from app import app
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QStackedWidget, QVBoxLayout, QHBoxLayout, QLabel, QMenuBar, QLineEdit, QFormLayout, QCheckBox
-from PyQt6 import QtGui
-from PyQt6.QtGui import QColor, QPalette, QAction, QIntValidator, QDoubleValidator, QFont
-
+from menu.menu_common2 import *  # noqa: F403
 from menu.script_runner.script_runner import ScriptMenu
 from menu.macro.macro import MacroMenu
-from menu import *
-# from app.home_page import HomePage
+from menu import *  # noqa: F403
 
 class FileMenu(QMenuBar):
     def __init__(self, main_window):
@@ -25,7 +19,6 @@ class FileMenu(QMenuBar):
         log_btn.triggered.connect(self.toolbar_button_clicked)
 
         file_menu.addAction(log_btn)
-
 
     def toolbar_button_clicked(self, s):
         print("click", s, "s")
@@ -50,7 +43,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(parent)
         self.resize(600, 500) 
         self.setWindowTitle("Auto-Clicker")
-        self.setWindowIcon( QtGui.QIcon('/home/double/projects/kbm_io/gui/not-available-circle.ico') )
+        # self.setWindowIcon( QtGui.QIcon('/home/double/projects/kbm_io/gui/not-available-circle.ico') )
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
     
@@ -107,21 +100,27 @@ class AppMenuPageSelectBtn(QWidget):
         layout.addWidget(self.button)
         self.setLayout(layout)
         self.button.clicked.connect(self.set_page)
-        
         self.button.setFixedWidth( 200 )
+        
     def set_page(self):
         print("he")
         app.main_window.set_page(self.menu)
 
 
-if __name__ == "__main__":
+def main():
     app_q = QApplication(sys.argv)
     window = MainWindow()
     app.set_main_window(window)
     window.show()
     import signal
     signal.signal(signal.SIGINT, signal.SIG_DFL)
+    app.init_signals()
     app_q.exec()
+    print("exiting!")
+    app.exit()
+
+if __name__ == "__main__":
+    main()
 
 # class MainWindow(QMainWindow):
 

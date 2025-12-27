@@ -1,0 +1,7 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+
+[tool.setuptools.packages.find]
+where = ["gui"] # Tells setuptools to look for packages in the 'src' directory

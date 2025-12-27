@@ -1,4 +1,5 @@
-from menu.menu_common import *
+from menu.menu_common2 import *
+
 
 
 class AppMenuPageSelectBtn(QWidget):
